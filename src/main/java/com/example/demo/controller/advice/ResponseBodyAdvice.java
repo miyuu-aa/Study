@@ -13,55 +13,57 @@ import org.springframework.web.servlet.mvc.method.annotation.AbstractMappingJack
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+/**
+ * 返却されるレスポンスボディをログ出力するためのアドバイスクラス。
+ *
+ * <p>
+ * {@link RestControllerAdvice} と {@link AbstractMappingJacksonResponseBodyAdvice} を利用し、
+ * すべてのレスポンスボディを JSON 形式でログに記録する。
+ * </p>
+ *
+ * <p>
+ * 例：API の戻り値オブジェクトを {@link ObjectMapper} を通じて JSON に変換して出力。
+ * 開発時のデバッグや監査ログに有効。
+ * </p>
+ */
 @RestControllerAdvice
-//(basePackages = "com.example.demo")
 public class ResponseBodyAdvice extends AbstractMappingJacksonResponseBodyAdvice {
 
-	private static final Logger logger = LoggerFactory.getLogger(ResponseBodyAdvice.class);
+    private static final Logger logger = LoggerFactory.getLogger(ResponseBodyAdvice.class);
 
-	@Autowired
-	private ObjectMapper objectMapper;
+    @Autowired
+    private ObjectMapper objectMapper;
 
-	@Override
-	protected void beforeBodyWriteInternal(MappingJacksonValue bodyContainer, MediaType contentType,
-			MethodParameter returnType, ServerHttpRequest request, ServerHttpResponse response) {
-		System.out.println("*****Rstart*****");
-		
-		Object body = bodyContainer.getValue();
+    /**
+     * レスポンスボディを書き込む前に呼ばれる。
+     *
+     * <p>
+     * JSON にシリアライズしてログ出力する。
+     * エラーが発生した場合は警告ログを残す。
+     * </p>
+     *
+     * @param bodyContainer レスポンスボディを格納する {@link MappingJacksonValue}
+     * @param contentType コンテンツタイプ
+     * @param returnType コントローラの戻り値型
+     * @param request HTTPリクエスト情報
+     * @param response HTTPレスポンス情報
+     */
+    @Override
+    protected void beforeBodyWriteInternal(MappingJacksonValue bodyContainer, MediaType contentType,
+            MethodParameter returnType, ServerHttpRequest request, ServerHttpResponse response) {
 
-		try {
-			String json = objectMapper.writeValueAsString(body);
-			logger.info("ResponseBody:{}", json);
-		} catch (Exception e) {
-			logger.warn("Failed to log response body", e);
-		}
-		
-		System.out.println("*****Rend*****");
-	}
+        System.out.println("*****Rstart*****");
 
-	//		Map<String, Object> map = new HashMap<>();
-	//		map.put("body", body);
-	//		map.put("timestamp", System.currentTimeMillis());
-	//		bodyContainer.setValue(map);
+        Object body = bodyContainer.getValue();
 
-	//		try {
-	//			if (body instanceof User user) {
-	//				user.setFullName(user.getFirstName() + " " + user.getLastName());
-	//				user.setGender(switch (user.getGenderCode()) {
-	//				case 1 -> "男";
-	//				case 2 -> "女";
-	//				default -> "不明";
-	//				});
-	//				user.setAge(Period.between(user.getBirthday(), LocalDate.now()).getYears());
-	//				bodyContainer.setValue(user);
-	//				String json = objectMapper.writeValueAsString(user);
-	//				logger.info("ResponseBody: {}", json);
-	//			} else {
-	//				String json = objectMapper.writeValueAsString(body);
-	//				logger.info("ResponseBody:　{}", json);
-	//			}
-	//		} catch (Exception e) {
-	//			logger.warn("Failed to log response body", e);
-	//		}
+        try {
+            String json = objectMapper.writeValueAsString(body);
+            logger.info("ResponseBody:{}", json);
+        } catch (Exception e) {
+            logger.warn("Failed to log response body", e);
+        }
+
+        System.out.println("*****Rend*****");
+    }
 
 }

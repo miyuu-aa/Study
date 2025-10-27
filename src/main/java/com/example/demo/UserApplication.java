@@ -11,75 +11,89 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import com.example.demo.entity.User;
 import com.example.demo.repository.UserRepository;
 
+/**
+ * Spring Boot アプリケーションのエントリーポイント。
+ *
+ * <p>
+ * アプリケーション起動時に {@link CommandLineRunner} を利用して
+ * サンプルユーザー100件をデータベースに登録します。
+ * 名前・性別・誕生日などをループで生成し、 {@link UserRepository} を介して保存します。
+ * </p>
+ *
+ * <p>
+ * JPA Auditing 機能を有効化しており、作成日時・更新日時などの自動管理が可能です。
+ * </p>
+ */
 @SpringBootApplication
 @EnableJpaAuditing
 public class UserApplication implements CommandLineRunner {
-	@Autowired
-	UserRepository userRepository;
 
-	public static void main(String[] args) {
+    /** ユーザーデータアクセス用リポジトリ */
+    @Autowired
+    private UserRepository userRepository;
 
-		SpringApplication.run(UserApplication.class, args);
+    /**
+     * アプリケーションのメインメソッド。
+     * 
+     * @param args コマンドライン引数
+     */
+    public static void main(String[] args) {
+        SpringApplication.run(UserApplication.class, args);
+    }
 
-	}
-	//	@PostConstruct
-	//	public void print() {
-	//		System.out.println("aaa");
-	//	}
+    /**
+     * アプリケーション起動後に自動実行される処理。
+     * <p>
+     * 100件のサンプルユーザーを生成し、データベースに保存します。
+     * 名前・姓・性別・誕生日を順番に割り当てています。
+     * </p>
+     *
+     * @param args コマンドライン引数
+     * @throws Exception 実行中に例外が発生した場合
+     */
+    @Override
+    public void run(String... args) throws Exception {
+        System.out.println("Initializing sample users...");
 
-	@Override
-	public void run(String... args) throws Exception {
-		// TODO 自動生成されたメソッド・スタブ
-		System.out.println("aaa");
-		//		User user = new User("", "", 0, LocalDate.now());
-		//		userRipository.save(user);
+        String[] firstNames = { "Emma", "Liam", "Olivia", "Noah", "Ava", "Elijah", "Sophia", "James", "Isabella",
+                "Benjamin", "Mia", "Lucas", "Charlotte", "Henry", "Amelia", "Ethan", "Harper",
+                "Alexander", "Evelyn", "Daniel", "Ella", "Matthew", "Scarlett", "Jackson",
+                "Abigail", "Sebastian", "Emily", "Carter", "Elizabeth", "Michael", "Avery",
+                "Samuel", "Sofia", "David", "Grace", "Joseph", "Chloe", "Owen", "Victoria",
+                "Gabriel", "Riley", "Caleb", "Aria", "Wyatt", "Lily", "Jack", "Hannah",
+                "Luke", "Aurora", "Ryan", "Zoe", "Nathan", "Nora", "Isaac", "Lillian",
+                "Levi", "Addison", "Christian", "Stella", "Andrew", "Natalie", "Joshua", "Violet",
+                "Jonathan", "Brooklyn", "Thomas", "Bella", "Charles", "Claire", "Eli", "Skylar",
+                "Dylan", "Lucy", "Cameron", "Paisley", "Aaron", "Everly", "Henry", "Anna",
+                "Nicholas", "Emilia", "Jaxon", "Hazel", "Lincoln", "Ellie", "Grayson", "Madelyn",
+                "Mateo", "Ruby", "Ezra", "Penelope", "Ryan", "Luna", "Asher", "Kennedy",
+                "Leo", "Samantha", "Maverick", "Peyton", "Elias", "Willow", "Christian", "Camila",
+                "Hunter", "Kinsley", "Jordan", "Violet" };
 
-		for (int i = 0; i < 100; i++) {
-//			Random random = new Random();
+        String[] lastNames = { "Smith", "Johnson", "Brown", "Davis", "Wilson", "Miller", "Taylor", "Anderson",
+                "Thomas", "Jackson", "White", "Harris", "Martin", "Thompson", "Garcia", "Martinez",
+                "Robinson", "Clark", "Rodriguez", "Lewis", "Lee", "Walker", "Hall", "Allen",
+                "Young", "King", "Wright", "Lopez", "Hill", "Scott", "Green", "Adams", "Baker",
+                "Gonzalez", "Nelson", "Carter", "Mitchell", "Perez", "Roberts", "Turner", "Phillips",
+                "Campbell", "Parker", "Evans", "Edwards", "Collins", "Stewart", "Sanchez", "Morris",
+                "Rogers", "Reed", "Cook", "Morgan", "Bell", "Murphy", "Bailey", "Rivera",
+                "Cooper", "Richardson", "Cox", "Howard", "Ward", "Torres", "Peterson", "Gray",
+                "Ramirez", "James", "Watson", "Brooks", "Kelly", "Sanders", "Price", "Bennett",
+                "Wood", "Barnes", "Ross", "Henderson", "Coleman", "Jenkins", "Perry", "Powell",
+                "Long", "Patterson", "Hughes", "Flores", "Washington", "Butler", "Simmons", "Foster",
+                "Gonzales", "Bryant", "Alexander", "Russell", "Griffin", "Diaz", "Hayes", "Myers",
+                "Ford", "Hamilton", "Graham", "Sullivan", "Wallace", "Woods", "Cole", "West",
+                "Jordan", "Owens", "Reynolds", "Fisher" };
 
-			String[] firstNames = { "Emma", "Liam", "Olivia", "Noah", "Ava", "Elijah", "Sophia", "James", "Isabella",
-					  "Benjamin", "Mia", "Lucas", "Charlotte", "Henry", "Amelia", "Ethan", "Harper",
-					  "Alexander", "Evelyn", "Daniel", "Ella", "Matthew", "Scarlett", "Jackson",
-					  "Abigail", "Sebastian", "Emily", "Carter", "Elizabeth", "Michael", "Avery",
-					  "Samuel", "Sofia", "David", "Grace", "Joseph", "Chloe", "Owen", "Victoria",
-					  "Gabriel", "Riley", "Caleb", "Aria", "Wyatt", "Lily", "Jack", "Hannah",
-					  "Luke", "Aurora", "Ryan", "Zoe", "Nathan", "Nora", "Isaac", "Lillian",
-					  "Levi", "Addison", "Christian", "Stella", "Andrew", "Natalie", "Joshua", "Violet",
-					  "Jonathan", "Brooklyn", "Thomas", "Bella", "Charles", "Claire", "Eli", "Skylar",
-					  "Dylan", "Lucy", "Cameron", "Paisley", "Aaron", "Everly", "Henry", "Anna",
-					  "Nicholas", "Emilia", "Jaxon", "Hazel", "Lincoln", "Ellie", "Grayson", "Madelyn",
-					  "Mateo", "Ruby", "Ezra", "Penelope", "Ryan", "Luna", "Asher", "Kennedy",
-					  "Leo", "Samantha", "Maverick", "Peyton", "Elias", "Willow", "Christian", "Camila",
-					  "Hunter", "Kinsley", "Jordan", "Violet" };
-			String[] lastNames = { "Smith", "Johnson", "Brown", "Davis", "Wilson", "Miller", "Taylor", "Anderson",
-					  "Thomas", "Jackson", "White", "Harris", "Martin", "Thompson", "Garcia", "Martinez",
-					  "Robinson", "Clark", "Rodriguez", "Lewis", "Lee", "Walker", "Hall", "Allen",
-					  "Young", "King", "Wright", "Lopez", "Hill", "Scott", "Green", "Adams", "Baker",
-					  "Gonzalez", "Nelson", "Carter", "Mitchell", "Perez", "Roberts", "Turner", "Phillips",
-					  "Campbell", "Parker", "Evans", "Edwards", "Collins", "Stewart", "Sanchez", "Morris",
-					  "Rogers", "Reed", "Cook", "Morgan", "Bell", "Murphy", "Bailey", "Rivera",
-					  "Cooper", "Richardson", "Cox", "Howard", "Ward", "Torres", "Peterson", "Gray",
-					  "Ramirez", "James", "Watson", "Brooks", "Kelly", "Sanders", "Price", "Bennett",
-					  "Wood", "Barnes", "Ross", "Henderson", "Coleman", "Jenkins", "Perry", "Powell",
-					  "Long", "Patterson", "Hughes", "Flores", "Washington", "Butler", "Simmons", "Foster",
-					  "Gonzales", "Bryant", "Alexander", "Russell", "Griffin", "Diaz", "Hayes", "Myers",
-					  "Ford", "Hamilton", "Graham", "Sullivan", "Wallace", "Woods", "Cole", "West",
-					  "Jordan", "Owens", "Reynolds", "Fisher" };
-//			String randomFirstName = firstNames[random.nextInt(firstNames.length)];
-//			String randomLastName = lastNames[random.nextInt(lastNames.length)] + i;
-			String firstName = firstNames[i];
-			String lastName = lastNames[i];
-//			int randomGenderCode = random.nextInt(Gender.values().length - 1) + 1;
-			int genderCode = i % 3 + 1;
+        for (int i = 0; i < 100; i++) {
+            String firstName = firstNames[i];
+            String lastName = lastNames[i];
+            int genderCode = i % 3 + 1;
+            LocalDate birthday = LocalDate.now().minusYears(i);
 
-//			int year = 1925 + random.nextInt(100);
-//			int month = 1 + random.nextInt(12);
-//			int day = 1 + random.nextInt(LocalDate.of(year, month, 1).lengthOfMonth());
-//			LocalDate ramdomBirthday = LocalDate.of(year, month, day);
-			LocalDate birthday = LocalDate.now().minusYears(i);
-
-			User user = new User(firstName, lastName, genderCode, birthday);
-			userRepository.save(user);
-		}
-	}
+            User user = new User(firstName, lastName, genderCode, birthday);
+            userRepository.save(user);
+        }
+        System.out.println("Sample users initialized successfully.");
+    }
 }
