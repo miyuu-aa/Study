@@ -24,6 +24,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestClientResponseException;
 
+import com.example.demo.entity.Customer;
 import com.example.demo.entity.User;
 
 @SpringBootTest(classes = UserApplication.class, webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -70,7 +71,7 @@ public class TestUserController {
 
 	@Test
 	void createUser_ReturnsCreatedUser() {
-		User user = new User("aaa", "AAA", 2, LocalDate.of(2008, 05, 14));
+		User user = new Customer("aaa", "AAA", 2, LocalDate.of(2008, 05, 14),(long) 10);
 		ResponseEntity<User> result = restClient.post()
 				.uri("http://localhost:{port}/users", port)
 				.contentType(MediaType.APPLICATION_JSON)
@@ -93,7 +94,7 @@ public class TestUserController {
 	
 	@Test 
 	void updateUser_Success() {
-		User user = new User("bbb", "BBB", 2, LocalDate.of(2010, 7, 21));
+		User user = new Customer("bbb", "BBB", 2, LocalDate.of(2010, 7, 21), (long) 10);
 		ResponseEntity<User> result = restClient.put()
 				.uri("http://localhost:{port}/users/{id}", port,2)
 				.contentType(MediaType.APPLICATION_JSON)
@@ -174,7 +175,7 @@ public class TestUserController {
 	
 	@Test
 	void updateUser_NotFound_ReturnsMassage() throws Exception {
-	    User user = new User("ccc", "CCC", 1, LocalDate.of(2010, 7, 21));
+	    User user = new Customer("ccc", "CCC", 1, LocalDate.of(2010, 7, 21), (long)10);
 	    RestClientResponseException e = assertThrows(RestClientResponseException.class, () -> restClient.put()
 	                .uri("http://localhost:{port}/users/{id}", port, 99)
 	                .contentType(MediaType.APPLICATION_JSON)
