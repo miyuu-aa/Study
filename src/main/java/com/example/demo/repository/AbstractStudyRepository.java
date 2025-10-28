@@ -22,6 +22,6 @@ import com.example.demo.entity.AbstractStudyEntity;
  * @param <T> 対象エンティティ型 {@link AbstractStudyEntity}
  */
 @NoRepositoryBean
-public interface AbstractStudyRepository<T extends AbstractStudyEntity<T>>
+public interface AbstractStudyRepository<T>
         extends JpaRepository<T, Integer>, JpaSpecificationExecutor<T> {
 }

@@ -8,6 +8,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
+import com.example.demo.entity.Customer;
 import com.example.demo.entity.User;
 import com.example.demo.repository.UserRepository;
 
@@ -90,8 +91,9 @@ public class UserApplication implements CommandLineRunner {
             String lastName = lastNames[i];
             int genderCode = i % 3 + 1;
             LocalDate birthday = LocalDate.now().minusYears(i);
+            long point = i;
 
-            User user = new User(firstName, lastName, genderCode, birthday);
+            User user = new Customer(firstName, lastName, genderCode, birthday, point);
             userRepository.save(user);
         }
         System.out.println("Sample users initialized successfully.");

@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
@@ -19,6 +21,8 @@ import org.hibernate.annotations.CascadeType;
 
 import com.example.demo.dto.ErrorResponse;
 import com.example.demo.exception.BusinessException;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
@@ -33,7 +37,11 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 @Table(name = "users")
-public class User extends AbstractStudyEntity<User> {
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "discriminatorJsonType")
+@JsonSubTypes({ @JsonSubTypes.Type(value = Admin.class), @JsonSubTypes.Type(value = Customer.class) })
+public abstract class User extends AbstractStudyEntity<User> {
+
 
 	//	@Schema(accessMode = AccessMode.READ_ONLY)
 	//	private int id;
@@ -45,23 +53,23 @@ public class User extends AbstractStudyEntity<User> {
 
 	@Transient
 	@Schema(accessMode = AccessMode.READ_ONLY)
-	private String fullName;
+	protected String fullName;
 
-	private String firstName;
+	protected String firstName;
 
-	private String lastName;
+	protected String lastName;
 
 	@Transient
 	@Schema(accessMode = AccessMode.READ_ONLY)
 	private String gender;
 
-	private int genderCode;
+	protected int genderCode;
 
 	@Transient
 	@Schema(accessMode = AccessMode.READ_ONLY)
 	private int age;
 
-	private LocalDate birthday;
+	protected LocalDate birthday;
 
 	@OneToOne(mappedBy = "user", orphanRemoval = true)
 	@Cascade(CascadeType.ALL)
@@ -72,12 +80,12 @@ public class User extends AbstractStudyEntity<User> {
 	@Cascade(CascadeType.ALL)
 	@Schema(accessMode = AccessMode.READ_ONLY)
 	private List<Post> posts = new ArrayList<>();
-	
+
 	@ManyToMany
-	@JoinTable(name = "user_group", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name ="group_id"))
+	@JoinTable(name = "user_group", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "group_id"))
 	@Schema(accessMode = AccessMode.READ_ONLY)
 	private List<Group> groups = new ArrayList<>();
-	
+
 	@Override
 	public String toString() {
 		return "User{id=" + id + ", name='" + fullName + "', gender='" + gender + "', age=" + age + "}";
@@ -113,20 +121,20 @@ public class User extends AbstractStudyEntity<User> {
 		groups.size();
 	}
 
-//	@PreRemove
-//	private void preRemove() {
-//		if (profile != null) {
-//			profile.setUser(null);
-//		}
-//		if (posts != null) {
-//			posts.forEach(post -> post.setUser(null));
-//		}
-//	}
+	//	@PreRemove
+	//	private void preRemove() {
+	//		if (profile != null) {
+	//			profile.setUser(null);
+	//		}
+	//		if (posts != null) {
+	//			posts.forEach(post -> post.setUser(null));
+	//		}
+	//	}
 
 	@Override
 	public void preRemove() {
 		// TODO 自動生成されたメソッド・スタブ
-	
+
 	}
 
 	@Override

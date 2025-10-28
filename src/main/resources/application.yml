@@ -20,3 +20,7 @@ logging:
 #spring.datasource.password: 
 #spring.jpa.hibernate.ddl-auto: create
 #spring.jpa.show-sql: true
+
+springdoc:
+  api-docs:
+    version: OPENAPI_3_0

@@ -1,5 +1,5 @@
-INSERT INTO USERS (first_name, last_name, gender_code, birthday, version) VALUES ('Alice', 'Johnson', 2, DATE '2008-05-14', 0);
-INSERT INTO USERS (first_name, last_name, gender_code, birthday, version) VALUES ('Bob', 'Smith', 1, DATE '2002-09-03', 0);
+INSERT INTO USERS (first_name, last_name, gender_code, birthday, dtype, role, version) VALUES ('Alice', 'Johnson', 2, DATE '2008-05-14', 'admin', 'Administrator', 0);
+INSERT INTO USERS (first_name, last_name, gender_code, birthday, dtype, role, version) VALUES ('Bob', 'Smith', 1, DATE '2002-09-03', 'admin', 'Developer', 0);
      		
 INSERT INTO PROFILE (biography, user_id, version) VALUES ('Hi, I’m Alice Johnson.',1, 0);
 INSERT INTO PROFILE (biography, user_id, version) VALUES ('Hello, I’m Bob Smith.', 2, 0);
