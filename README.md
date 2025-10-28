@@ -102,7 +102,7 @@ erDiagram
 
 ## 📎 API Endpoints List
 
-### User API
+### User API  
 | Method | Endpoint                             | Description             |
 |--------|-------------------------------------|-------------------------|
 | GET    | /user/{id}                           | Get a user              |
