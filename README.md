@@ -51,16 +51,10 @@ http://localhost:8080/swagger-ui/index.html
 
 ---
 
-## 🧩 ER Diagram
+## 🧩 Class Diagram
 ```mermaid
-erDiagram
-    USER ||--|| PROFILE : has
-    USER ||--o{ POST : writes
-    USER }o--o{ GROUP : belongs
-    USER ||--|{ CUSTOMER : extends
-    USER ||--|{ ADMIN : extends
-
-    USER {
+classDiagram
+    class USER {
         int id
         string firstName
         string lastName
@@ -68,34 +62,41 @@ erDiagram
         string gender
     }
 
-    PROFILE {
+    class PROFILE {
         int id
         string address
         string phone
         string email
     }
 
-    POST {
+    class POST {
         int id
         string title
         string content
         date createdDate
     }
 
-    GROUP {
+    class GROUP {
         int id
         string groupName
     }
 
-    CUSTOMER {
+    class CUSTOMER {
         int id
         int point
     }
 
-    ADMIN {
+    class ADMIN {
         int id
         string role
     }
+
+    USER "1" --> "1" PROFILE : has
+    USER "1" --> "0..*" POST : writes
+    USER "0..*" -- "0..*" GROUP : belongs
+
+    CUSTOMER --|> USER : extends
+    ADMIN --|> USER : extends
 ```
 
 ---
