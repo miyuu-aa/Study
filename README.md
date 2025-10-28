@@ -28,7 +28,7 @@ You can learn how to build REST APIs using Spring Boot, JPA, and Swagger through
 
 ---
 
-## 🚀 Hou to Run
+## 🚀 How to Run
 
 ### 1. Clone this repository
 ```bash
