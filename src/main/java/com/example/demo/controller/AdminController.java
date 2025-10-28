@@ -21,28 +21,26 @@ import com.example.demo.service.UserService;
 @RequestMapping("admin")
 public class AdminController extends AbstractController<User, UserRepository, UserService> {
 
-    protected AdminController(UserService service) {
+	protected AdminController(UserService service) {
 		super(service);
-		// TODO 自動生成されたコンストラクター・スタブ
 	}
-    
-    @Autowired
-    AdminService adminService;
-    
-    @PostMapping("{id}/all")
-    @ResponseStatus(HttpStatus.CREATED)
-    public Admin add(@RequestBody Admin admin) {
-        return adminService.add(admin);
-    }
-    
-    @PutMapping("{id}/all")
-    public Admin update(@PathVariable int id, @RequestBody Admin admin) {
-        return adminService.updateAdmin(id, admin);
-    }
+
+	@Autowired
+	AdminService adminService;
+
+	@PostMapping("{id}/all")
+	@ResponseStatus(HttpStatus.CREATED)
+	public Admin add(@RequestBody Admin admin) {
+		return adminService.add(admin);
+	}
+
+	@PutMapping("{id}/all")
+	public Admin update(@PathVariable int id, @RequestBody Admin admin) {
+		return adminService.updateAdmin(id, admin);
+	}
 
 	@PutMapping("/{id}/role")
-    public Admin updateRole(@PathVariable int id, @RequestParam String role) {
-        return adminService.updateRole(id, role);
-    }
+	public Admin updateRole(@PathVariable int id, @RequestParam String role) {
+		return adminService.updateRole(id, role);
+	}
 }
-

@@ -32,7 +32,7 @@ public class Profile extends AbstractStudyEntity<Profile> {
 	public void validate() {
 	}
 
-//	@PreRemove
+	//	@PreRemove
 	@Override
 	public void preRemove() {
 		if (user != null) {
@@ -42,8 +42,6 @@ public class Profile extends AbstractStudyEntity<Profile> {
 
 	@Override
 	public void preUpdate(Profile request) {
-		//	    profile.setUser(request.getUser());
-		//	    profile.getUser().setProfile(request);	
 		this.biography = request.getBiography();
 	}
 

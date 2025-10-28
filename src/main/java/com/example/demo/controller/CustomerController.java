@@ -23,23 +23,22 @@ public class CustomerController extends AbstractController<User, UserRepository,
 
 	protected CustomerController(UserService service) {
 		super(service);
-		// TODO 自動生成されたコンストラクター・スタブ
 	}
 
 	@Autowired
 	CustomerService customerService;
 
 	@PostMapping("{id}/all")
-    @ResponseStatus(HttpStatus.CREATED)
-    public Customer add(@RequestBody Customer customer) {
-        return customerService.add(customer);
-    }
-	
+	@ResponseStatus(HttpStatus.CREATED)
+	public Customer add(@RequestBody Customer customer) {
+		return customerService.add(customer);
+	}
+
 	@PutMapping("{id}/all")
 	public Customer update(@PathVariable int id, @RequestBody Customer customer) {
 		return customerService.updateCustomer(id, customer);
 	}
-	
+
 	@PutMapping("/{id}/point")
 	public Customer addPoist(@PathVariable int id, @RequestParam long point) {
 		return customerService.addPoint(id, point);

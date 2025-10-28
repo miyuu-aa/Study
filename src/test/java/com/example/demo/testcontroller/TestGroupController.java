@@ -21,25 +21,25 @@ import com.example.demo.entity.Group;
 @Import(TestConfig.class)
 public class TestGroupController {
 
-    @LocalServerPort
-    int port;
+	@LocalServerPort
+	int port;
 
-    @Autowired
-    RestClient restClient;
+	@Autowired
+	RestClient restClient;
 
-    @Test
-    void createGroup_Success() {
-        Group group = new Group();
-        group.setName("Test Group");
+	@Test
+	void createGroup_Success() {
+		Group group = new Group();
+		group.setName("Test Group");
 
-        ResponseEntity<Group> response = restClient.post()
-                .uri("http://localhost:{port}/group", port)
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(group)
-                .retrieve()
-                .toEntity(Group.class);
+		ResponseEntity<Group> response = restClient.post()
+				.uri("http://localhost:{port}/group", port)
+				.contentType(MediaType.APPLICATION_JSON)
+				.body(group)
+				.retrieve()
+				.toEntity(Group.class);
 
-        assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        assertNotNull(response.getBody());
-    }
+		assertEquals(HttpStatus.CREATED, response.getStatusCode());
+		assertNotNull(response.getBody());
+	}
 }

@@ -22,7 +22,7 @@ import lombok.Setter;
 public class Post extends AbstractStudyEntity<Post> {
 
 	private String content;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	@Schema(accessMode = AccessMode.READ_ONLY)
@@ -31,7 +31,7 @@ public class Post extends AbstractStudyEntity<Post> {
 	@Override
 	public void validate() {
 	}
-	
+
 	@Override
 	public void rewrite() {
 		user.setFullName(user.getFirstName() + " " + user.getLastName());
@@ -39,7 +39,7 @@ public class Post extends AbstractStudyEntity<Post> {
 		user.setAge(Period.between(user.getBirthday(), LocalDate.now()).getYears());
 	}
 
-//	@PreRemove
+	//	@PreRemove
 	@Override
 	public void preRemove() {
 		if (user != null) {

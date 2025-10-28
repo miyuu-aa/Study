@@ -32,8 +32,6 @@ public class Group extends AbstractStudyEntity<Group> {
 
 	@Override
 	public void validate() {
-		// TODO 自動生成されたメソッド・スタブ
-
 	}
 
 	@Override
@@ -48,7 +46,6 @@ public class Group extends AbstractStudyEntity<Group> {
 	@Override
 	public void preRemove() {
 		if (users != null) {
-//			getUsers().clear();
 			users.forEach(user -> user.getGroups().remove(this));
 		}
 	}

@@ -11,5 +11,4 @@ public class TestConfig {
 	RestClient restClient() {
 		return RestClient.create();
 	}
-
 }

@@ -25,5 +25,4 @@ public class Admin extends User {
 			this.role = adminRequest.getRole();
 		}
 	}
-
 }

@@ -4,18 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
-//@Setter
 @AllArgsConstructor
-//@NoArgsConstructor
 public enum Gender {
 
 	MAN(1, "男", "Male"), WOMAN(2, "女", "Female"), OTHER(3, "その他", "Other"), UNKNOWN(0, "不明", "Unknown");
-
-	//	private Gender(int code, String JapaneseName, String EnglishName) {
-	//		this.code = code;
-	//		this.JapaneseName = JapaneseName;
-	//		this.EnglishName = EnglishName;
-	//	}
 
 	private int code;
 

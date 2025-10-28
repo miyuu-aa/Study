@@ -23,24 +23,24 @@ import com.example.demo.entity.Customer;
 @Import(TestConfig.class)
 public class TestCustomerController {
 
-    @LocalServerPort
-    int port;
+	@LocalServerPort
+	int port;
 
-    @Autowired
-    RestClient restClient;
+	@Autowired
+	RestClient restClient;
 
-    @Test
-    void createCustomer_Success() {
-        Customer customer = new Customer("Alice","Smith",2,LocalDate.of(2008,5,14),10L);
+	@Test
+	void createCustomer_Success() {
+		Customer customer = new Customer("Alice", "Smith", 2, LocalDate.of(2008, 5, 14), 10L);
 
-        ResponseEntity<Customer> response = restClient.post()
-                .uri("http://localhost:{port}/customer", port)
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(customer)
-                .retrieve()
-                .toEntity(Customer.class);
+		ResponseEntity<Customer> response = restClient.post()
+				.uri("http://localhost:{port}/customer", port)
+				.contentType(MediaType.APPLICATION_JSON)
+				.body(customer)
+				.retrieve()
+				.toEntity(Customer.class);
 
-        assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        assertNotNull(response.getBody());
-    }
+		assertEquals(HttpStatus.CREATED, response.getStatusCode());
+		assertNotNull(response.getBody());
+	}
 }

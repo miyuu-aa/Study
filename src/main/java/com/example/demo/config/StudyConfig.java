@@ -17,26 +17,21 @@ import com.fasterxml.jackson.datatype.hibernate6.Hibernate6Module;
 @Configuration
 public class StudyConfig {
 
-    /**
-     * JSON シリアライズ設定をカスタマイズした {@link ObjectMapper} を生成します。
-     *
-     * <p>
-     * 遅延ロードプロキシの扱いなど Hibernate 特有のデータ形式を
-     * 適切にシリアライズできるよう設定しています。
-     * </p>
-     *
-     * @param jackson2ObjectMapperBuilder Spring 提供の ObjectMapper ビルダー
-     * @return カスタム設定が追加された ObjectMapper
-     */
-    @Bean
-    ObjectMapper objectMapper(Jackson2ObjectMapperBuilder jackson2ObjectMapperBuilder) {
-        return jackson2ObjectMapperBuilder.build()
-                .registerModule(
-                        // Hibernate6用モジュールを有効化
-                        new Hibernate6Module().configure(
-                                Hibernate6Module.Feature.USE_TRANSIENT_ANNOTATION,
-                                false // @Transient を持つフィールドの扱いを変更
-                        )
-                );
-    }
+	/**
+	 * JSON シリアライズ設定をカスタマイズした {@link ObjectMapper} を生成します。
+	 *
+	 * <p>
+	 * 遅延ロードプロキシの扱いなど Hibernate 特有のデータ形式を
+	 * 適切にシリアライズできるよう設定しています。
+	 * </p>
+	 *
+	 * @param jackson2ObjectMapperBuilder Spring 提供の ObjectMapper ビルダー
+	 * @return カスタム設定が追加された ObjectMapper
+	 */
+	@Bean
+	ObjectMapper objectMapper(Jackson2ObjectMapperBuilder jackson2ObjectMapperBuilder) {
+		return jackson2ObjectMapperBuilder.build()
+				.registerModule(
+						new Hibernate6Module().configure(Hibernate6Module.Feature.USE_TRANSIENT_ANNOTATION, false));
+	}
 }

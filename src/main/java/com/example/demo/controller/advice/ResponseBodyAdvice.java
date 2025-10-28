@@ -29,41 +29,37 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @RestControllerAdvice
 public class ResponseBodyAdvice extends AbstractMappingJacksonResponseBodyAdvice {
 
-    private static final Logger logger = LoggerFactory.getLogger(ResponseBodyAdvice.class);
+	private static final Logger logger = LoggerFactory.getLogger(ResponseBodyAdvice.class);
 
-    @Autowired
-    private ObjectMapper objectMapper;
+	@Autowired
+	private ObjectMapper objectMapper;
 
-    /**
-     * レスポンスボディを書き込む前に呼ばれる。
-     *
-     * <p>
-     * JSON にシリアライズしてログ出力する。
-     * エラーが発生した場合は警告ログを残す。
-     * </p>
-     *
-     * @param bodyContainer レスポンスボディを格納する {@link MappingJacksonValue}
-     * @param contentType コンテンツタイプ
-     * @param returnType コントローラの戻り値型
-     * @param request HTTPリクエスト情報
-     * @param response HTTPレスポンス情報
-     */
-    @Override
-    protected void beforeBodyWriteInternal(MappingJacksonValue bodyContainer, MediaType contentType,
-            MethodParameter returnType, ServerHttpRequest request, ServerHttpResponse response) {
+	/**
+	 * レスポンスボディを書き込む前に呼ばれる。
+	 *
+	 * <p>
+	 * JSON にシリアライズしてログ出力する。
+	 * エラーが発生した場合は警告ログを残す。
+	 * </p>
+	 *
+	 * @param bodyContainer レスポンスボディを格納する {@link MappingJacksonValue}
+	 * @param contentType コンテンツタイプ
+	 * @param returnType コントローラの戻り値型
+	 * @param request HTTPリクエスト情報
+	 * @param response HTTPレスポンス情報
+	 */
+	@Override
+	protected void beforeBodyWriteInternal(MappingJacksonValue bodyContainer, MediaType contentType,
+			MethodParameter returnType, ServerHttpRequest request, ServerHttpResponse response) {
 
-        System.out.println("*****Rstart*****");
+		Object body = bodyContainer.getValue();
 
-        Object body = bodyContainer.getValue();
-
-        try {
-            String json = objectMapper.writeValueAsString(body);
-            logger.info("ResponseBody:{}", json);
-        } catch (Exception e) {
-            logger.warn("Failed to log response body", e);
-        }
-
-        System.out.println("*****Rend*****");
-    }
+		try {
+			String json = objectMapper.writeValueAsString(body);
+			logger.info("ResponseBody:{}", json);
+		} catch (Exception e) {
+			logger.warn("Failed to log response body", e);
+		}
+	}
 
 }

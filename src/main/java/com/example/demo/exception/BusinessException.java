@@ -15,16 +15,16 @@ import lombok.Getter;
 @Getter
 public class BusinessException extends RuntimeException {
 
-    /** クライアントへ返却するエラー情報 */
-    private final ErrorResponse response;
+	/** クライアントへ返却するエラー情報 */
+	private final ErrorResponse response;
 
-    /**
-     * BusinessException の新規作成。
-     *
-     * @param response エラー応答情報
-     */
-    public BusinessException(ErrorResponse response) {
-        super(response.getMessage());
-        this.response = response;
-    }
+	/**
+	 * BusinessException の新規作成。
+	 *
+	 * @param response エラー応答情報
+	 */
+	public BusinessException(ErrorResponse response) {
+		super(response.getMessage());
+		this.response = response;
+	}
 }

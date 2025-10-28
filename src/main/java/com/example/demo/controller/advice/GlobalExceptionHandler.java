@@ -28,53 +28,53 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
-    /**
-     * 業務例外 (BusinessException) を処理。
-     *
-     * <p>
-     * 発生した例外に保持されている {@link ErrorResponse} をそのまま返却します。
-     * HTTPステータスは 400 (Bad Request)。
-     * </p>
-     *
-     * @param e BusinessException
-     * @return ErrorResponse クラスの JSON
-     */
-    @ExceptionHandler(BusinessException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse handleBusinessException(BusinessException e) {
-        log.warn("BusinessException occurred: {}", e.getResponse().getMessage());
-        return e.getResponse();
-    }
+	/**
+	 * 業務例外 (BusinessException) を処理。
+	 *
+	 * <p>
+	 * 発生した例外に保持されている {@link ErrorResponse} をそのまま返却します。
+	 * HTTPステータスは 400 (Bad Request)。
+	 * </p>
+	 *
+	 * @param e BusinessException
+	 * @return ErrorResponse クラスの JSON
+	 */
+	@ExceptionHandler(BusinessException.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	public ErrorResponse handleBusinessException(BusinessException e) {
+		log.warn("BusinessException occurred: {}", e.getResponse().getMessage());
+		return e.getResponse();
+	}
 
-    /**
-     * Spring 内部の例外をカスタマイズして処理。
-     *
-     * <p>
-     * デフォルトでは {@link ResponseEntityExceptionHandler#handleExceptionInternal} を呼び出す。
-     * デバッグや開発環境でのログ出力に便利。
-     * </p>
-     *
-     * @param ex 例外
-     * @param body レスポンスボディ
-     * @param headers HTTPヘッダ
-     * @param statusCode HTTPステータスコード
-     * @param request Webリクエスト情報
-     * @return ResponseEntity オブジェクト
-     */
-    @Override
-    protected ResponseEntity<Object> handleExceptionInternal(
-            Exception ex, Object body, HttpHeaders headers,
-            HttpStatusCode statusCode, WebRequest request) {
+	/**
+	 * Spring 内部の例外をカスタマイズして処理。
+	 *
+	 * <p>
+	 * デフォルトでは {@link ResponseEntityExceptionHandler#handleExceptionInternal} を呼び出す。
+	 * デバッグや開発環境でのログ出力に便利。
+	 * </p>
+	 *
+	 * @param ex 例外
+	 * @param body レスポンスボディ
+	 * @param headers HTTPヘッダ
+	 * @param statusCode HTTPステータスコード
+	 * @param request Webリクエスト情報
+	 * @return ResponseEntity オブジェクト
+	 */
+	@Override
+	protected ResponseEntity<Object> handleExceptionInternal(
+			Exception ex, Object body, HttpHeaders headers,
+			HttpStatusCode statusCode, WebRequest request) {
 
-        if (statusCode == HttpStatus.BAD_REQUEST) {
-            log.warn("BAD_REQUEST", ex);
-        }
-        log.trace("trace log example");
-        log.debug("debug log example");
-        log.info("info log example");
-        log.warn("warn log example");
-        log.error("error log example");
+		if (statusCode == HttpStatus.BAD_REQUEST) {
+			log.warn("BAD_REQUEST", ex);
+		}
+		log.trace("trace log example");
+		log.debug("debug log example");
+		log.info("info log example");
+		log.warn("warn log example");
+		log.error("error log example");
 
-        return super.handleExceptionInternal(ex, body, headers, statusCode, request);
-    }
+		return super.handleExceptionInternal(ex, body, headers, statusCode, request);
+	}
 }

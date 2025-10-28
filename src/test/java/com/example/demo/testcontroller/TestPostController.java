@@ -25,33 +25,32 @@ import com.example.demo.repository.UserRepository;
 @SpringBootTest(classes = UserApplication.class, webEnvironment = WebEnvironment.RANDOM_PORT)
 @Import(TestConfig.class)
 public class TestPostController {
-	
 
 	@LocalServerPort
-    int port;
+	int port;
 
-    @Autowired
-    RestClient restClient;
+	@Autowired
+	RestClient restClient;
 
-    @Autowired
-    UserRepository userRepository;
-    
-    @Test
-    void createPost_Success() {
-    	User user = new Customer("Alice", "Smith", 2, LocalDate.of(2008,5,14), 10L);
-    	user = userRepository.save(user);
-        Post post = new Post();
-        post.setUser(user);
-        post.setContent("This is a test post.");
-        
-        ResponseEntity<Post> response = restClient.post()
-                .uri("http://localhost:{port}/post", port)
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(post)
-                .retrieve()
-                .toEntity(Post.class);
+	@Autowired
+	UserRepository userRepository;
 
-        assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        assertNotNull(response.getBody());
-    }
+	@Test
+	void createPost_Success() {
+		User user = new Customer("Alice", "Smith", 2, LocalDate.of(2008, 5, 14), 10L);
+		user = userRepository.save(user);
+		Post post = new Post();
+		post.setUser(user);
+		post.setContent("This is a test post.");
+
+		ResponseEntity<Post> response = restClient.post()
+				.uri("http://localhost:{port}/post", port)
+				.contentType(MediaType.APPLICATION_JSON)
+				.body(post)
+				.retrieve()
+				.toEntity(Post.class);
+
+		assertEquals(HttpStatus.CREATED, response.getStatusCode());
+		assertNotNull(response.getBody());
+	}
 }

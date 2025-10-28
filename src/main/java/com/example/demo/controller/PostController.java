@@ -17,7 +17,6 @@ public class PostController extends AbstractController<Post, PostRepository, Pos
 
 	protected PostController(PostService service) {
 		super(service);
-		// TODO 自動生成されたコンストラクター・スタブ
 	}
 
 }

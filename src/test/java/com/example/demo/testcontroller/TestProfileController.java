@@ -27,41 +27,41 @@ import com.example.demo.repository.UserRepository;
 public class TestProfileController {
 
 	@LocalServerPort
-    int port;
+	int port;
 
-    @Autowired
-    RestClient restClient;
+	@Autowired
+	RestClient restClient;
 
-    @Autowired
-    UserRepository userRepository;
-    
-    @Test
-    void createProfile_Success() {
-    	User user = new Customer("Alice", "Smith", 2, LocalDate.of(2008,5,14), 10L);
-    	user = userRepository.save(user);
-        Profile profile = new Profile();
-        profile.setUser(user);
-        profile.setBiography("Hello,test.");
+	@Autowired
+	UserRepository userRepository;
 
-        ResponseEntity<Profile> response = restClient.post()
-                .uri("http://localhost:{port}/profile", port)
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(profile)
-                .retrieve()
-                .toEntity(Profile.class);
+	@Test
+	void createProfile_Success() {
+		User user = new Customer("Alice", "Smith", 2, LocalDate.of(2008, 5, 14), 10L);
+		user = userRepository.save(user);
+		Profile profile = new Profile();
+		profile.setUser(user);
+		profile.setBiography("Hello,test.");
 
-        assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        assertNotNull(response.getBody());
-    }
-    
-    @Test
-    void getProfileById_Success() {
-        ResponseEntity<Profile> response = restClient.get()
-                .uri("http://localhost:{port}/profile/{id}", port, 1)
-                .retrieve()
-                .toEntity(Profile.class);
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertNotNull(response.getBody());
-    }
+		ResponseEntity<Profile> response = restClient.post()
+				.uri("http://localhost:{port}/profile", port)
+				.contentType(MediaType.APPLICATION_JSON)
+				.body(profile)
+				.retrieve()
+				.toEntity(Profile.class);
+
+		assertEquals(HttpStatus.CREATED, response.getStatusCode());
+		assertNotNull(response.getBody());
+	}
+
+	@Test
+	void getProfileById_Success() {
+		ResponseEntity<Profile> response = restClient.get()
+				.uri("http://localhost:{port}/profile/{id}", port, 1)
+				.retrieve()
+				.toEntity(Profile.class);
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+		assertNotNull(response.getBody());
+	}
 
 }

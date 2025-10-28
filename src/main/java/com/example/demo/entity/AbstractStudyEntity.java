@@ -39,59 +39,46 @@ import lombok.Setter;
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 public abstract class AbstractStudyEntity<T> {
 
-    /**
-     * 主キー。永続化時に自動採番されます。
-     * APIレスポンス時は読み取りのみ許可されます。
-     */
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Schema(accessMode = AccessMode.READ_ONLY)
-    protected int id;
+	/**
+	 * 主キー。永続化時に自動採番されます。
+	 * APIレスポンス時は読み取りのみ許可されます。
+	 */
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Schema(accessMode = AccessMode.READ_ONLY)
+	protected int id;
 
-    /**
-     * 楽観的ロック管理用バージョン番号。
-     * 更新ごとに自動インクリメントされます。
-     * APIレスポンス時は読み取りのみ許可されます。
-     */
-    @Version
-    @Schema(accessMode = AccessMode.READ_ONLY)
-    protected long version;
+	/**
+	 * 楽観的ロック管理用バージョン番号。
+	 * 更新ごとに自動インクリメントされます。
+	 * APIレスポンス時は読み取りのみ許可されます。
+	 */
+	@Version
+	@Schema(accessMode = AccessMode.READ_ONLY)
+	protected long version;
 
-    /**
-     * エンティティのバリデーションを実装するための抽象メソッドです。
-     * サブクラスで必要な検証処理を記述してください。
-     */
-    public abstract void validate();
+	/**
+	 * エンティティのバリデーションを実装するための抽象メソッドです。
+	 * サブクラスで必要な検証処理を記述してください。
+	 */
+	public abstract void validate();
 
-    /**
-     * レスポンス前にデータ整形を行う際に使用します。
-     * 必要に応じて関連情報の調整や不要データの除去を実装してください。
-     */
-    public abstract void rewrite();
+	/**
+	 * レスポンス前にデータ整形を行う際に使用します。
+	 * 必要に応じて関連情報の調整や不要データの除去を実装してください。
+	 */
+	public abstract void rewrite();
 
-    /**
-     * 削除処理前に関連エンティティの参照を解除するなど、
-     * 整合性維持のための前処理を実装するための抽象メソッドです。
-     */
-    public abstract void preRemove();
+	/**
+	 * 削除処理前に関連エンティティの参照を解除するなど、
+	 * 整合性維持のための前処理を実装するための抽象メソッドです。
+	 */
+	public abstract void preRemove();
 
-    /**
-     * 更新前に依存関係を整えるための処理を実装する抽象メソッドです。
-     *
-     * @param entity 更新後の内容を持つエンティティ
-     */
-    public abstract void preUpdate(T entity);
-
-    // 監査情報（必要に応じて有効化）
-    // @CreatedBy
-    // String createdBy;
-    //
-    // @CreatedDate
-    // LocalDateTime createdDate;
-    //
-    // @LastModifiedBy
-    // String lastModifiedBy;
-    //
-    // @LastModifiedDate
-    // LocalDateTime lastModifiedDate;
+	/**
+	 * 更新前に依存関係を整えるための処理を実装する抽象メソッドです。
+	 *
+	 * @param entity 更新後の内容を持つエンティティ
+	 */
+	public abstract void preUpdate(T entity);
 }

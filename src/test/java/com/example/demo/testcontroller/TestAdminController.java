@@ -23,29 +23,29 @@ import com.example.demo.entity.Admin;
 @Import(TestConfig.class)
 public class TestAdminController {
 
-    @LocalServerPort
-    int port;
+	@LocalServerPort
+	int port;
 
-    @Autowired
-    RestClient restClient;
+	@Autowired
+	RestClient restClient;
 
-    @Test
-    void createAdmin_Success() {
-        Admin admin = new Admin();
-        admin.setFirstName("Alice");
-        admin.setLastName("Johnson");
-        admin.setGenderCode(1);
-        admin.setBirthday(LocalDate.now());
-        admin.setRole("Manager");
+	@Test
+	void createAdmin_Success() {
+		Admin admin = new Admin();
+		admin.setFirstName("Alice");
+		admin.setLastName("Johnson");
+		admin.setGenderCode(1);
+		admin.setBirthday(LocalDate.now());
+		admin.setRole("Manager");
 
-        ResponseEntity<Admin> response = restClient.post()
-                .uri("http://localhost:{port}/admin", port)
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(admin)
-                .retrieve()
-                .toEntity(Admin.class);
+		ResponseEntity<Admin> response = restClient.post()
+				.uri("http://localhost:{port}/admin", port)
+				.contentType(MediaType.APPLICATION_JSON)
+				.body(admin)
+				.retrieve()
+				.toEntity(Admin.class);
 
-        assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        assertNotNull(response.getBody());
-    }
+		assertEquals(HttpStatus.CREATED, response.getStatusCode());
+		assertNotNull(response.getBody());
+	}
 }

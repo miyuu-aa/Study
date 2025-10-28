@@ -23,5 +23,5 @@ import com.example.demo.entity.AbstractStudyEntity;
  */
 @NoRepositoryBean
 public interface AbstractStudyRepository<T>
-        extends JpaRepository<T, Integer>, JpaSpecificationExecutor<T> {
+		extends JpaRepository<T, Integer>, JpaSpecificationExecutor<T> {
 }

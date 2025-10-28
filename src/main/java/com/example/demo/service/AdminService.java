@@ -2,14 +2,12 @@ package com.example.demo.service;
 
 import java.time.LocalDate;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dto.ErrorResponse;
 import com.example.demo.entity.Admin;
 import com.example.demo.entity.User;
 import com.example.demo.exception.BusinessException;
-import com.example.demo.repository.AdminRepository;
 import com.example.demo.repository.UserRepository;
 
 @Service
@@ -17,11 +15,7 @@ public class AdminService extends AbstractService<User, UserRepository> {
 
 	public AdminService(UserRepository repository) {
 		super(repository);
-		// TODO 自動生成されたコンストラクター・スタブ
 	}
-
-	@Autowired
-	AdminRepository adminRepository;
 
 	@Override
 	public Admin findById(int id) {
@@ -32,21 +26,16 @@ public class AdminService extends AbstractService<User, UserRepository> {
 		admin.rewrite();
 		return admin;
 	}
-	
-	public Admin add (Admin request) {
+
+	public Admin add(Admin request) {
 		request.validate();
-        Admin add = repository.save(request);
-        add.setRole(request.getRole());
-        add.rewrite();
-        return add;
+		Admin add = repository.save(request);
+		add.setRole(request.getRole());
+		add.rewrite();
+		return add;
 	}
 
 	public Admin updateAdmin(int id, Admin request) {
-//		admin.setFirstName(request.getFirstName());
-//		admin.setLastName(request.getLastName());
-//		admin.setGenderCode(request.getGenderCode());
-//		admin.setBirthday(request.getBirthday());
-//		admin.setRole(request.getRole());
 		request.validate();
 		Admin existing = findById(id);
 		existing.preUpdate(request);
@@ -65,5 +54,4 @@ public class AdminService extends AbstractService<User, UserRepository> {
 		admin.setRole(role);
 		return repository.save(admin);
 	}
-
 }

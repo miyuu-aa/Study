@@ -42,15 +42,6 @@ import lombok.Setter;
 @JsonSubTypes({ @JsonSubTypes.Type(value = Admin.class), @JsonSubTypes.Type(value = Customer.class) })
 public abstract class User extends AbstractStudyEntity<User> {
 
-
-	//	@Schema(accessMode = AccessMode.READ_ONLY)
-	//	private int id;
-	//	private String name;
-	//	private String gender;
-	//	private int age;
-	//	@NotBlank
-	//	private String name;
-
 	@Transient
 	@Schema(accessMode = AccessMode.READ_ONLY)
 	protected String fullName;
@@ -121,30 +112,12 @@ public abstract class User extends AbstractStudyEntity<User> {
 		groups.size();
 	}
 
-	//	@PreRemove
-	//	private void preRemove() {
-	//		if (profile != null) {
-	//			profile.setUser(null);
-	//		}
-	//		if (posts != null) {
-	//			posts.forEach(post -> post.setUser(null));
-	//		}
-	//	}
-
 	@Override
 	public void preRemove() {
-		// TODO 自動生成されたメソッド・スタブ
-
 	}
 
 	@Override
 	public void preUpdate(User request) {
-		//		User existing = userRepository.findById(id)
-		//				.orElseThrow(() -> new BusinessException(new ErrorResponse("User Not Found.", LocalDate.now())));
-		//		setId(existing.getId());
-		//		setVersion(existing.getVersion());
-		//		setProfile(existing.getProfile());
-		//		getProfile().setUser(this);
 		this.firstName = request.getFirstName();
 		this.lastName = request.getLastName();
 		this.genderCode = request.getGenderCode();

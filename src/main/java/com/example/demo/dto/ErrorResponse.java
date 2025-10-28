@@ -25,9 +25,9 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ErrorResponse {
 
-    /** エラーメッセージ */
-    private String message;
+	/** エラーメッセージ */
+	private String message;
 
-    /** エラー発生時刻 */
-    private LocalDate timestamp;
+	/** エラー発生時刻 */
+	private LocalDate timestamp;
 }

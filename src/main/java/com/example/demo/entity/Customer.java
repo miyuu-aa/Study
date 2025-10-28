@@ -16,15 +16,15 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 @DiscriminatorValue(value = "customer")
-public class Customer extends User{
-	
+public class Customer extends User {
+
 	private long point;
-	
+
 	public Customer(String firstName, String lastName, int genderCode, LocalDate birthday, Long point) {
-        super(firstName, lastName, genderCode, birthday);
-        this.point = point;
-    }
-	
+		super(firstName, lastName, genderCode, birthday);
+		this.point = point;
+	}
+
 	@Override
 	public void preUpdate(User request) {
 		super.preUpdate(request);

@@ -9,7 +9,6 @@ import com.example.demo.entity.User;
 
 public class UserSpecifications {
 
-
 	public static Specification<User> isWomen() {
 		return (root, query, builder) -> builder.equal(root.get("genderCode"), Gender.WOMAN.getCode());
 	}
@@ -17,5 +16,4 @@ public class UserSpecifications {
 	public static Specification<User> isChildren() {
 		return (root, query, builder) -> builder.greaterThan(root.get("birthday"), LocalDate.now().minusYears(18));
 	}
-	
 }
